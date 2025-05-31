@@ -19,20 +19,21 @@ jobs:
         with:
           terraform_version: 1.6.6
 
+      - name: Write Google Credentials
+        run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" > creds.json
+
       - name: Terraform Format
         run: terraform fmt -check -recursive
 
       - name: Terraform Init
         env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-        run: |
-          echo "${GOOGLE_CREDENTIALS}" > creds.json
-          export GOOGLE_APPLICATION_CREDENTIALS=$PWD/creds.json
-          terraform init
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/creds.json
+        run: terraform init
 
       - name: Terraform Plan
         env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/creds.json
         run: |
-          export GOOGLE_APPLICATION_CREDENTIALS=$PWD/creds.json
-          terraform plan
+          terraform plan \
+            -var="project=${{ secrets.TF_VAR_project }}" \
+            -var="region=${{ secrets.TF_VAR_region }}"
