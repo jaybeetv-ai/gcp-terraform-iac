@@ -19,8 +19,9 @@ jobs:
         with:
           terraform_version: 1.6.6
 
-      - name: Write Google Credentials
-        run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" > creds.json
+      - name: Decode Google Credentials
+        run: |
+          echo "${{ secrets.GOOGLE_CREDENTIALS }}" | base64 --decode > creds.json
 
       - name: Terraform Format
         run: terraform fmt -check -recursive
