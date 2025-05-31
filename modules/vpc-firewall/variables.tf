@@ -7,5 +7,5 @@ variable "credentials_file" {
 }
 variable "allowed_ip_range" {
   description = "IP range allowed for SSH"
-  default     = "0.0.0.0/0"  # ⚠️ For practice. Replace with your real IP if needed.
+  default     = "0.0.0.0/0" # ⚠️ For practice. Replace with your real IP if needed.
 }
