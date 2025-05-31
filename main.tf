@@ -12,3 +12,4 @@ module "vpc_firewall" {
   credentials_file  = var.credentials_file
   allowed_ip_range  = var.allowed_ip_range
 }
+
